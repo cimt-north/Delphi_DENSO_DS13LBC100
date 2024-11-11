@@ -16,14 +16,14 @@ object FormPrintSetup: TFormPrintSetup
   object lblprinter: TLabel
     Left = 88
     Top = 56
-    Width = 41
+    Width = 35
     Height = 15
     Caption = 'Printer'
   end
   object lblpapersize: TLabel
     Left = 68
     Top = 96
-    Width = 61
+    Width = 53
     Height = 15
     Caption = 'Paper Size'
   end
@@ -45,7 +45,6 @@ object FormPrintSetup: TFormPrintSetup
     Color = 16706018
     ParentBackground = False
     TabOrder = 1
-    ExplicitTop = 275
     object btnClose: TButton
       Left = 470
       Top = 10

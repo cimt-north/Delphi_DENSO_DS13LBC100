@@ -20,13 +20,18 @@ object FormPreview: TFormPreview
     Height = 411
     Align = alClient
     TabOrder = 2
-    object AcroPDF1: TAcroPDF
+    object WebBrowser1: TWebBrowser
       Left = 0
       Top = 2
       Width = 1080
       Height = 720
       TabOrder = 0
-      ControlData = {000E00009F6F00006A4A0000}
+      ControlData = {
+        4C0000009F6F00006A4A00000100000001020000000000000000000000000000
+        000000004C000000000000000000000001000000E0D057007335CF11AE690800
+        2B2E126208000000000000004C0000000114020000000000C000000000000046
+        8000000000000000000000000000000000000000000000000000000000000000
+        00000000000000000100000000000000000000000000000000000000}
     end
   end
   object Panel1: TPanel
@@ -43,6 +48,13 @@ object FormPreview: TFormPreview
       Width = 68
       Height = 15
       Caption = 'Page to print'
+    end
+    object lblPage: TLabel
+      Left = 712
+      Top = 10
+      Width = 35
+      Height = 15
+      Caption = 'Page : '
     end
     object edtFrom: TEdit
       Left = 98

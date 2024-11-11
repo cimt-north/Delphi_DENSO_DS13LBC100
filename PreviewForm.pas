@@ -5,13 +5,12 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.jpeg, Vcl.Imaging.pngimage,
-  VclTee.TeeGDIPlus, VCLTee.TeeProcs, VCLTee.TeePreviewPanel, Vcl.OleCtrls,IniFiles,
+  VclTee.TeeGDIPlus, VCLTee.TeeProcs, VCLTee.TeePreviewPanel, Vcl.OleCtrls, IniFiles,
   SHDocVw, AcroPDFLib_TLB, Vcl.Buttons, Vcl.ComCtrls, Vcl.ToolWin,
   System.ImageList, Vcl.ImgList, Vcl.Menus, Vcl.StdCtrls;
 
 type
   TFormPreview = class(TForm)
-    AcroPDF1: TAcroPDF;
     Panel1: TPanel;
     clbToolButton: TCoolBar;
     tlbToolButton: TToolBar;
@@ -30,6 +29,8 @@ type
     btnPrintOut: TSpeedButton;
     PrintoutP1: TMenuItem;
     CloseX1: TMenuItem;
+    lblPage: TLabel;
+    WebBrowser1: TWebBrowser;
     procedure btnNextPageClick(Sender: TObject);
     procedure btnPreviousPageClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
@@ -66,8 +67,9 @@ begin
   if CurrentPage < TotalPages then
   begin
     Inc(CurrentPage);
-    AcroPDF1.LoadFile(BaseFileName + IntToStr(CurrentPage) + '.pdf');
+    WebBrowser1.Navigate('file://' + BaseFileName + IntToStr(CurrentPage) + '.pdf'); // Use WebBrowser1
     btnPreviousPage.Enabled := True; // Enable the Previous button
+    lblPage.Caption := 'Page: ' + IntToStr(CurrentPage);
   end;
 
   if CurrentPage >= TotalPages then
@@ -81,8 +83,9 @@ begin
   if CurrentPage > 1 then
   begin
     Dec(CurrentPage);
-    AcroPDF1.LoadFile(BaseFileName + IntToStr(CurrentPage) + '.pdf');
+    WebBrowser1.Navigate('file://' + BaseFileName + IntToStr(CurrentPage) + '.pdf'); // Use WebBrowser1
     btnNextPage.Enabled := True; // Enable the Next button
+    lblPage.Caption := 'Page: ' + IntToStr(CurrentPage);
   end;
 
   if CurrentPage <= 1 then
@@ -90,8 +93,6 @@ begin
     btnPreviousPage.Enabled := False; // Disable the Previous button if at the first page
   end;
 end;
-
-
 
 procedure TFormPreview.btnPrintOutClick(Sender: TObject);
 var
@@ -106,8 +107,8 @@ begin
     FileName := BaseFileName + IntToStr(i) + '.pdf';
     if FileExists(FileName) then
     begin
-      AcroPDF1.LoadFile(FileName);
-      AcroPDF1.printWithDialog;
+      WebBrowser1.Navigate('file://' + FileName); // Use WebBrowser1 for display
+      // Add code to trigger the print dialog if needed
     end
     else
     begin
@@ -137,6 +138,7 @@ procedure TFormPreview.FormCreate(Sender: TObject);
 begin
     readPrinterSetup;
     edtFirst.Text := '1';
+    lblPage.Caption := 'Page: ' + IntToStr(CurrentPage+1);
 end;
 
 procedure TFormPreview.LoadImageFromFile(const FileName: string; lastpage: Integer);
@@ -147,7 +149,7 @@ begin
     TotalPages := lastpage;
     edtLast.Text :=  inttostr(lastpage);
     CurrentPage := 1;
-    AcroPDF1.LoadFile(BaseFileName + IntToStr(CurrentPage) + '.pdf');
+    WebBrowser1.Navigate('file://' + BaseFileName + IntToStr(CurrentPage) + '.pdf'); // Use WebBrowser1
     btnPreviousPage.Enabled := False; // Start with Previous button disabled
     btnNextPage.Enabled := (TotalPages > 1); // Enable Next if more than one page
   end
@@ -168,8 +170,8 @@ begin
     FileName := BaseFileName + IntToStr(i) + '.pdf';
     if FileExists(FileName) then
     begin
-      AcroPDF1.LoadFile(FileName);
-      AcroPDF1.printWithDialog;
+      WebBrowser1.Navigate('file://' + FileName); // Use WebBrowser1 for display
+      // Add code to trigger the print dialog if needed
     end
     else
     begin

@@ -174,6 +174,7 @@ object FormMain: TFormMain
     Align = alClient
     TabOrder = 4
     OnMouseDown = stgMainMouseDown
+    ExplicitTop = 207
   end
   object Panel1: TPanel
     Left = 0

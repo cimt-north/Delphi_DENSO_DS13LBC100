@@ -20,10 +20,6 @@ object FormPreview: TFormPreview
     Height = 411
     Align = alClient
     TabOrder = 2
-    ExplicitLeft = 256
-    ExplicitTop = 232
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object AcroPDF1: TAcroPDF
       Left = 0
       Top = 2
@@ -41,7 +37,6 @@ object FormPreview: TFormPreview
     Align = alTop
     ParentBackground = False
     TabOrder = 0
-    ExplicitWidth = 676
     object lblPagetoprint: TLabel
       Left = 24
       Top = 10
@@ -53,7 +48,7 @@ object FormPreview: TFormPreview
       Left = 98
       Top = 6
       Width = 47
-      Height = 19
+      Height = 23
       Color = clBtnFace
       Enabled = False
       ReadOnly = True
@@ -64,7 +59,7 @@ object FormPreview: TFormPreview
       Left = 202
       Top = 6
       Width = 47
-      Height = 19
+      Height = 23
       Color = clBtnFace
       Enabled = False
       ReadOnly = True
@@ -106,7 +101,6 @@ object FormPreview: TFormPreview
       end>
     Color = clWhite
     ParentColor = False
-    ExplicitWidth = 676
     object tlbToolButton: TToolBar
       Left = 11
       Top = 0

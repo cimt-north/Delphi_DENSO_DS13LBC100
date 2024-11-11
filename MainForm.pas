@@ -212,7 +212,7 @@ begin
   // Loop through each cell in the grid
   for Row := 0 to stgMain.RowCount - 1 do
   begin
-    for Col := 0 to stgMain.ColCount - 1 do
+    for Col := 1 to stgMain.ColCount - 1 do
     begin
       // Add cell content to TextToCopy with tab delimiters
       TextToCopy := TextToCopy + stgMain.Cells[Col, Row];

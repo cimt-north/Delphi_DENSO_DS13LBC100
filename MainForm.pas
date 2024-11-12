@@ -89,8 +89,6 @@ type
     procedure InitialProgram;
     procedure DebugSQLText(const SQLText: string);
     procedure InitConnection;
-    procedure PrintImagePreview;
-    procedure PrintCoatingLabel;
     procedure PreviewLabels;
     procedure AutoPopulateBarcodes;
   public
@@ -132,7 +130,7 @@ end;
 
 procedure TFormMain.Exit1Click(Sender: TObject);
 begin
-  halt;
+  Close;
 end;
 
 procedure TFormMain.Copy1Click(Sender: TObject);
@@ -159,7 +157,7 @@ end;
 
 procedure TFormMain.btnPrintOutClick(Sender: TObject);
 begin
-  PrintCoatingLabel;
+  Close;
 end;
 
 procedure TFormMain.btnPrintSetupClick(Sender: TObject);
@@ -698,7 +696,8 @@ var
   i: Integer;
   LabelBitmap: TBitmap;
   LabelWidthPx, LabelHeightPx: Integer;
-  Barcode, Status, JobNo, PartsNo, PartsName, Qty, Weight, Coating, Vendor: string;
+  barcode, Status, JobNo, PartsNo, PartsName, Qty, Weight, Coating,
+    Vendor: string;
   ResourceStream: TResourceStream;
   DensoLogo: TPngImage;
 begin
@@ -707,14 +706,15 @@ begin
 
   FormPreview := TFormPreview.Create(Self);
   try
-    FormPreview.TotalPages := stgMain.RowCount - 1; // Set total pages for pagination
+    FormPreview.TotalPages := stgMain.RowCount - 1;
+    // Set total pages for pagination
     FormPreview.CurrentPage := 1;
 
     // Loop through each row in the StringGrid, skipping the header row (Row 0)
     for i := 1 to stgMain.RowCount - 1 do
     begin
       // Retrieve values from the current row
-      Barcode := stgMain.Cells[COL_BARCODE, i];
+      barcode := stgMain.Cells[COL_BARCODE, i];
       Status := stgMain.Cells[COL_STATUS, i];
       JobNo := stgMain.Cells[COL_JOB_NO, i];
       PartsNo := stgMain.Cells[COL_PARTS_NO, i];
@@ -740,16 +740,18 @@ begin
           Pen.Width := 2;
           Rectangle(10, 10, LabelWidthPx - 10, LabelHeightPx - 10);
           Pen.Width := 1;
-          Rectangle(20, 20, LabelWidthPx - 20, LabelHeightPx - 20);
+          Rectangle(30, 30, LabelWidthPx - 30, LabelHeightPx - 30);
 
           // Load and draw DENSO logo
           try
-            ResourceStream := TResourceStream.Create(HInstance, 'DENSOLOGO', RT_RCDATA);
+            ResourceStream := TResourceStream.Create(HInstance, 'DENSOLOGO',
+              RT_RCDATA);
             try
               DensoLogo := TPngImage.Create;
               try
                 DensoLogo.LoadFromStream(ResourceStream);
-                StretchDraw(Rect(30, 25, 80, 45), DensoLogo); // Adjust the logo size and position
+                StretchDraw(Rect(40, 35, 150, 60), DensoLogo);
+                // Adjust the logo size and position
               finally
                 DensoLogo.Free;
               end;
@@ -762,43 +764,47 @@ begin
           end;
 
           // Draw company name
-          Font.Size := 8;
-          TextOut(90, 30, 'Innovative Manufacturing Solution Asia Co.,Ltd');
+          Font.Size := 9;
+          TextOut(170, 40, 'Innovative Manufacturing Solution Asia Co.,Ltd');
 
-          // Draw title "Special Coating"
+          // Draw title "Special Coating" centered
           Font.Size := 10;
           Font.Style := [fsBold];
-          TextOut(90, 50, 'Special Coating');
+          TextOut((LabelWidthPx div 2) - TextWidth('Special Coating') div 2, 90,
+            'Special Coating');
           Font.Style := []; // Reset style
 
-          // Draw JOB. NO., Q'ty, and Parts No.
-          Font.Size := 8;
-          TextOut(30, 80, 'JOB. NO.');
-          MoveTo(110, 90); LineTo(290, 90); // Adjusted the line width for JOB. NO.
-          TextOut(320, 80, 'Q''ty');
-          MoveTo(350, 90); LineTo(420, 90); // Adjusted the line width for Q'ty
-          TextOut(440, 80, 'Pcs.');
+          Font.Size := 10;
+          TextOut(40, 150, 'JOB. NO.');
+          MoveTo(160, 175);
+          LineTo(400, 175);
+          TextOut(410, 150, 'Q''ty');
+          MoveTo(460, 175);
+          LineTo(590, 175);
+          TextOut(600, 150, 'Pcs.');
 
-          TextOut(30, 100, 'Parts No.');
-          MoveTo(110, 110); LineTo(290, 110); // Adjusted the line width for Parts No.
-          TextOut(320, 100, 'Weight');
-          MoveTo(370, 110); LineTo(420, 110); // Adjusted the line width for Weight
-          TextOut(440, 100, 'Kgs.');
+          TextOut(40, 210, 'Parts No.');
+          MoveTo(160, 235);
+          LineTo(400, 235);
+          TextOut(410, 210, 'Weight');
+          MoveTo(500, 235);
+          LineTo(590, 235);
+          TextOut(600, 210, 'Kgs.');
 
-          // Draw Coating and Vendor fields
-          TextOut(30, 120, 'Coating');
-          MoveTo(110, 130); LineTo(290, 130); // Adjusted the line width for Coating
-          TextOut(320, 120, 'Vendor');
-          MoveTo(370, 130); LineTo(500, 130); // Adjusted the line width for Vendor
+          TextOut(40, 270, 'Coating');
+          MoveTo(160, 295);
+          LineTo(400, 295);
+          TextOut(410, 270, 'Vendor');
+          MoveTo(500, 295);
+          LineTo(650, 295);
 
           // Insert dynamic content
-          Font.Style := [];
-          TextOut(115, 80, JobNo);
-          TextOut(355, 80, Qty);
-          TextOut(115, 100, PartsNo);
-          TextOut(375, 100, Weight);
-          TextOut(115, 120, Coating);
-          TextOut(375, 120, Vendor);
+          TextOut(170, 142, JobNo);
+          TextOut(540, 142, '8');
+          TextOut(170, 202, PartsNo);
+          TextOut(540, 202, Weight);
+          TextOut(170, 262, Coating);
+          TextOut(510, 262, Vendor);
         end;
 
         // Send bitmap to PreviewForm
@@ -815,32 +821,6 @@ begin
   finally
     FormPreview.Free;
   end;
-end;
-
-
-procedure TFormMain.PrintCoatingLabel();
-
-  procedure SelectPrinterByName(const PrinterName: string);
-  var
-    i: Integer;
-  begin
-    for i := 0 to Printer.Printers.Count - 1 do
-    begin
-      if SameText(Printer.Printers[i], PrinterName) then
-      begin
-        Printer.PrinterIndex := i; // Select the printer by setting PrinterIndex
-        Exit;
-      end;
-    end;
-
-    // If not found, show a message or handle the error
-    ShowMessage('Printer not found: ' + PrinterName);
-  end;
-
-begin
-  // SelectPrinterByName('Microsoft Print to PDF');
-  SelectPrinterByName('SATO WS408');
-  PrintImagePreview;
 end;
 
 procedure TFormMain.readPrinterSetup(Sheet: Variant);
@@ -882,33 +862,6 @@ begin
   end;
 end;
 
-procedure TFormMain.PrintImagePreview;
-const
-  LabelWidthMM = 90; // Label width in mm
-  LabelHeightMM = 45; // Label height in mm
-  DPI = 203; // Set this to your printer's DPI (203 or 300 typically)
-var
-  LabelWidthPx, LabelHeightPx: Integer;
-  PrinterRect: TRect;
-begin
-  // Calculate label dimensions in pixels based on DPI
-  LabelWidthPx := Round(LabelWidthMM * DPI / 25.4);
-  LabelHeightPx := Round(LabelHeightMM * DPI / 25.4);
-
-  // Begin the print job
-  Printer.BeginDoc;
-  try
-    // Define the rectangle on the printer's canvas where the image will be drawn
-    PrinterRect := Rect(0, 0, LabelWidthPx, LabelHeightPx);
-
-    // Draw the TImage component's bitmap directly to the printer canvas, scaling as needed
-    // Printer.Canvas.StretchDraw(PrinterRect, ImagePreview.Picture.Bitmap);
-
-  finally
-    Printer.EndDoc; // End the print job
-  end;
-end;
-
 procedure TFormMain.SetDefaultPrinter(const PrinterName: string);
 begin
   if not Winapi.WinSpool.SetDefaultPrinter(PChar(PrinterName)) then
@@ -918,7 +871,8 @@ end;
 // For debug
 procedure TFormMain.AutoPopulateBarcodes;
 const
-  Barcodes: array [0 .. 2] of string = ('3179222', '3179223', '3179224');
+  Barcodes: array [0 .. 3] of string = ('3179222', '3179223', '3179224',
+    '3179225');
 var
   i: Integer;
 begin

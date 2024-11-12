@@ -6,7 +6,7 @@ object FormMain: TFormMain
   Margins.Right = 4
   Margins.Bottom = 4
   Caption = 'DS13LBC100'
-  ClientHeight = 684
+  ClientHeight = 688
   ClientWidth = 1905
   Color = 16636106
   Font.Charset = DEFAULT_CHARSET
@@ -31,14 +31,14 @@ object FormMain: TFormMain
       item
         Control = tlbToolButton
         ImageIndex = -1
-        MinHeight = 598
+        MinHeight = 957
         Width = 1899
       end>
     object tlbToolButton: TToolBar
       Left = 11
       Top = 0
       Width = 1890
-      Height = 598
+      Height = 957
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -223,7 +223,7 @@ object FormMain: TFormMain
   end
   object stbBase: TStatusBar
     Left = 0
-    Top = 660
+    Top = 664
     Width = 1905
     Height = 24
     Margins.Left = 4
@@ -234,7 +234,7 @@ object FormMain: TFormMain
   end
   object stgMain: TStringGrid
     Left = 0
-    Top = 281
+    Top = 285
     Width = 1905
     Height = 329
     Margins.Left = 4
@@ -249,7 +249,7 @@ object FormMain: TFormMain
   end
   object Panel1: TPanel
     Left = 0
-    Top = 610
+    Top = 614
     Width = 1905
     Height = 50
     Margins.Left = 4
@@ -289,7 +289,7 @@ object FormMain: TFormMain
     Left = 0
     Top = 251
     Width = 1905
-    Height = 30
+    Height = 34
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4

@@ -6,8 +6,8 @@ object FormPreview: TFormPreview
   Margins.Right = 4
   Margins.Bottom = 4
   Caption = 'Preview'
-  ClientHeight = 615
-  ClientWidth = 996
+  ClientHeight = 610
+  ClientWidth = 994
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,8 +21,8 @@ object FormPreview: TFormPreview
   object Panel2: TPanel
     Left = 0
     Top = 111
-    Width = 996
-    Height = 504
+    Width = 994
+    Height = 499
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -43,7 +43,7 @@ object FormPreview: TFormPreview
   object Panel1: TPanel
     Left = 0
     Top = 70
-    Width = 996
+    Width = 994
     Height = 41
     Margins.Left = 4
     Margins.Top = 4
@@ -125,7 +125,7 @@ object FormPreview: TFormPreview
   object clbToolButton: TCoolBar
     Left = 0
     Top = 0
-    Width = 996
+    Width = 994
     Height = 70
     Margins.Left = 4
     Margins.Top = 4
@@ -135,16 +135,16 @@ object FormPreview: TFormPreview
       item
         Control = tlbToolButton
         ImageIndex = -1
-        MinHeight = 371
-        Width = 990
+        MinHeight = 594
+        Width = 988
       end>
     Color = clWhite
     ParentColor = False
     object tlbToolButton: TToolBar
       Left = 11
       Top = 0
-      Width = 981
-      Height = 371
+      Width = 979
+      Height = 594
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4

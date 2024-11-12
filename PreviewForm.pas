@@ -8,7 +8,7 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.jpeg,
   Vcl.Imaging.pngimage,
   VclTee.TeeGDIPlus, VclTee.TeeProcs, VclTee.TeePreviewPanel, Vcl.OleCtrls,
-  IniFiles,
+  IniFiles, Printers,
   SHDocVw, Vcl.Buttons, Vcl.ComCtrls, Vcl.ToolWin,
   System.ImageList, Vcl.ImgList, Vcl.Menus, Vcl.StdCtrls;
 
@@ -96,26 +96,53 @@ begin
 end;
 
 procedure TFormPreview.btnPrintOutClick(Sender: TObject);
-var
-  i, FirstPage, lastpage: Integer;
-  FileName: string;
-begin
-  FirstPage := StrToIntDef(edtFirst.Text, 1); // Read first number from edtFirst
-  lastpage := StrToIntDef(edtLast.Text, TotalPages);
-  // Read last number from edtLast
-
-  for i := FirstPage to lastpage do
+  procedure SelectPrinterByName(const PrinterName: string);
+  var
+    i: Integer;
   begin
-    FileName := BaseFileName + IntToStr(i) + '.pdf';
-    if FileExists(FileName) then
+    for i := 0 to Printer.Printers.Count - 1 do
     begin
+      if SameText(Printer.Printers[i], PrinterName) then
+      begin
+        Printer.PrinterIndex := i; // Select the printer by setting PrinterIndex
+        Exit;
+      end;
+    end;
 
-    end
-    else
-    begin
-      ShowMessage('File not found: ' + FileName);
+    // If not found, show a message or handle the error
+    ShowMessage('Printer not found: ' + PrinterName);
+  end;
+
+  procedure PrintImagePreview;
+  const
+    LabelWidthMM = 90; // Label width in mm
+    LabelHeightMM = 45; // Label height in mm
+    DPI = 203; // Set this to your printer's DPI (203 or 300 typically)
+  var
+    LabelWidthPx, LabelHeightPx: Integer;
+    PrinterRect: TRect;
+  begin
+    // Calculate label dimensions in pixels based on DPI
+    LabelWidthPx := Round(LabelWidthMM * DPI / 25.4);
+    LabelHeightPx := Round(LabelHeightMM * DPI / 25.4);
+
+    // Begin the print job
+    Printer.BeginDoc;
+    try
+      // Define the rectangle on the printer's canvas where the image will be drawn
+      PrinterRect := Rect(0, 0, LabelWidthPx, LabelHeightPx);
+
+      // Draw the TImage component's bitmap directly to the printer canvas, scaling as needed
+      Printer.Canvas.StretchDraw(PrinterRect, ImagePreview.Picture.Bitmap);
+
+    finally
+      Printer.EndDoc; // End the print job
     end;
   end;
+
+begin
+  SelectPrinterByName('SATO WS408');
+  PrintImagePreview;
 end;
 
 procedure TFormPreview.CloseX1Click(Sender: TObject);

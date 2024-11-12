@@ -1,43 +1,61 @@
 object FormMain: TFormMain
   Left = 0
   Top = 0
+  Margins.Left = 4
+  Margins.Top = 4
+  Margins.Right = 4
+  Margins.Bottom = 4
   Caption = 'DS13LBC100'
-  ClientHeight = 535
-  ClientWidth = 1524
+  ClientHeight = 684
+  ClientWidth = 1905
   Color = 16636106
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -12
+  Font.Height = -15
   Font.Name = 'Segoe UI'
   Font.Style = []
   Menu = mamMain
   OnCreate = FormCreate
-  TextHeight = 15
+  PixelsPerInch = 120
+  TextHeight = 20
   object clbToolButton: TCoolBar
     Left = 0
     Top = 0
-    Width = 1524
-    Height = 56
+    Width = 1905
+    Height = 70
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Bands = <
       item
         Control = tlbToolButton
         ImageIndex = -1
-        MinHeight = 58
-        Width = 1518
+        MinHeight = 598
+        Width = 1899
       end>
     object tlbToolButton: TToolBar
       Left = 11
       Top = 0
-      Width = 1509
-      Height = 58
-      ButtonHeight = 52
+      Width = 1890
+      Height = 598
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      ButtonHeight = 81
+      ButtonWidth = 29
       Caption = 'tlbToolButton'
       TabOrder = 0
       object btnPrintOut: TSpeedButton
         Left = 0
         Top = 0
-        Width = 70
-        Height = 52
+        Width = 88
+        Height = 81
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'PrintOut'
         ImageIndex = 9
         Images = imlToolBar
@@ -45,10 +63,14 @@ object FormMain: TFormMain
         OnClick = btnPrintOutClick
       end
       object btnPreview: TSpeedButton
-        Left = 70
+        Left = 88
         Top = 0
-        Width = 70
-        Height = 52
+        Width = 87
+        Height = 81
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alLeft
         Caption = 'Preview'
         ImageIndex = 4
@@ -57,10 +79,14 @@ object FormMain: TFormMain
         OnClick = btnPreviewClick
       end
       object btnPrintSetup: TSpeedButton
-        Left = 140
+        Left = 175
         Top = 0
-        Width = 70
-        Height = 52
+        Width = 88
+        Height = 81
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Print Setup'
         ImageIndex = 9
         Images = imlToolBar
@@ -68,10 +94,14 @@ object FormMain: TFormMain
         OnClick = btnPrintSetupClick
       end
       object btnClose: TSpeedButton
-        Left = 210
+        Left = 263
         Top = 0
-        Width = 70
-        Height = 52
+        Width = 87
+        Height = 81
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alLeft
         Caption = 'Close'
         ImageIndex = 2
@@ -83,24 +113,32 @@ object FormMain: TFormMain
   end
   object panTitle: TPanel
     Left = 0
-    Top = 56
-    Width = 1524
-    Height = 41
+    Top = 70
+    Width = 1905
+    Height = 51
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     Color = 16706018
     ParentBackground = False
     TabOrder = 1
     object labTitle: TLabel
       Left = 0
-      Top = 10
-      Width = 300
-      Height = 22
+      Top = 13
+      Width = 375
+      Height = 27
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       AutoSize = False
       Caption = '   SPECIAL COATING'
       Color = 16690328
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWhite
-      Font.Height = -16
+      Font.Height = -20
       Font.Name = 'Tahoma'
       Font.Style = []
       ParentColor = False
@@ -110,102 +148,152 @@ object FormMain: TFormMain
   end
   object panHeader: TPanel
     Left = 0
-    Top = 97
-    Width = 1524
-    Height = 104
+    Top = 121
+    Width = 1905
+    Height = 130
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     Color = 16635850
     ParentBackground = False
     TabOrder = 2
     object lblBarCode: TLabel
-      Left = 40
-      Top = 24
-      Width = 43
-      Height = 15
+      Left = 50
+      Top = 30
+      Width = 55
+      Height = 20
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Barcode'
       Color = 16636618
       ParentColor = False
     end
     object btnDelete: TSpeedButton
-      Left = 40
-      Top = 64
-      Width = 100
-      Height = 20
+      Left = 50
+      Top = 80
+      Width = 125
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Delete'
       OnClick = btnDeleteClick
     end
     object btnDeleteSelection: TSpeedButton
-      Left = 155
-      Top = 64
-      Width = 100
-      Height = 20
+      Left = 194
+      Top = 80
+      Width = 125
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Delete Selection'
       OnClick = btnDeleteSelectionClick
     end
     object btnDeleteAll: TSpeedButton
-      Left = 270
-      Top = 64
-      Width = 100
-      Height = 20
+      Left = 338
+      Top = 80
+      Width = 125
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Delete All'
       OnClick = btnDeleteAllClick
     end
     object edtbarcode: TEdit
-      Left = 97
-      Top = 21
-      Width = 350
-      Height = 23
+      Left = 121
+      Top = 26
+      Width = 438
+      Height = 28
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       TabOrder = 0
       OnKeyPress = edtbarcodeKeyPress
     end
   end
   object stbBase: TStatusBar
     Left = 0
-    Top = 516
-    Width = 1524
-    Height = 19
+    Top = 660
+    Width = 1905
+    Height = 24
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Panels = <>
   end
   object stgMain: TStringGrid
     Left = 0
-    Top = 212
-    Width = 1524
-    Height = 264
+    Top = 281
+    Width = 1905
+    Height = 329
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
+    DefaultColWidth = 80
+    DefaultRowHeight = 30
     TabOrder = 4
     OnMouseDown = stgMainMouseDown
   end
   object Panel1: TPanel
     Left = 0
-    Top = 476
-    Width = 1524
-    Height = 40
+    Top = 610
+    Width = 1905
+    Height = 50
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alBottom
     Color = 16635850
     ParentBackground = False
     TabOrder = 5
     object btnSelectAll: TSpeedButton
-      Left = 49
-      Top = 10
-      Width = 100
-      Height = 20
+      Left = 61
+      Top = 13
+      Width = 125
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Select All'
       OnClick = btnSelectAllClick
     end
     object btnDeSelectAll: TSpeedButton
-      Left = 155
-      Top = 10
-      Width = 100
-      Height = 20
+      Left = 194
+      Top = 13
+      Width = 125
+      Height = 25
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'DeSelect All'
       OnClick = btnDeSelectAllClick
     end
   end
   object ProgressBar1: TProgressBar
     Left = 0
-    Top = 201
-    Width = 1524
-    Height = 11
+    Top = 251
+    Width = 1905
+    Height = 30
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     Anchors = [akLeft, akTop, akRight, akBottom]
     Smooth = True
@@ -218,7 +306,6 @@ object FormMain: TFormMain
       Caption = '&File'
       object Printout1: TMenuItem
         Caption = 'Printout'
-        OnClick = Printout1Click
       end
       object Setting1: TMenuItem
         Caption = 'Setting'

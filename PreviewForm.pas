@@ -3,15 +3,17 @@ unit PreviewForm;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.jpeg, Vcl.Imaging.pngimage,
-  VclTee.TeeGDIPlus, VCLTee.TeeProcs, VCLTee.TeePreviewPanel, Vcl.OleCtrls,IniFiles,
-  SHDocVw, AcroPDFLib_TLB, Vcl.Buttons, Vcl.ComCtrls, Vcl.ToolWin,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Imaging.jpeg,
+  Vcl.Imaging.pngimage,
+  VclTee.TeeGDIPlus, VclTee.TeeProcs, VclTee.TeePreviewPanel, Vcl.OleCtrls,
+  IniFiles,
+  SHDocVw, Vcl.Buttons, Vcl.ComCtrls, Vcl.ToolWin,
   System.ImageList, Vcl.ImgList, Vcl.Menus, Vcl.StdCtrls;
 
 type
   TFormPreview = class(TForm)
-    AcroPDF1: TAcroPDF;
     Panel1: TPanel;
     clbToolButton: TCoolBar;
     tlbToolButton: TToolBar;
@@ -30,6 +32,7 @@ type
     btnPrintOut: TSpeedButton;
     PrintoutP1: TMenuItem;
     CloseX1: TMenuItem;
+    ImagePreview: TImage;
     procedure btnNextPageClick(Sender: TObject);
     procedure btnPreviousPageClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
@@ -41,12 +44,14 @@ type
     procedure PrintoutP1Click(Sender: TObject);
   private
     { Private declarations }
+
+  public
     CurrentPage: Integer;
     TotalPages: Integer;
     BaseFileName: string;
-  public
-    procedure LoadImageFromFile(const FileName: string; lastpage: Integer);
     procedure readPrinterSetup;
+    procedure LoadImageFromBitmap(Bitmap: TBitmap; PageNumber: Integer);
+
   end;
 
 var
@@ -66,7 +71,6 @@ begin
   if CurrentPage < TotalPages then
   begin
     Inc(CurrentPage);
-    AcroPDF1.LoadFile(BaseFileName + IntToStr(CurrentPage) + '.pdf');
     btnPreviousPage.Enabled := True; // Enable the Previous button
   end;
 
@@ -81,33 +85,31 @@ begin
   if CurrentPage > 1 then
   begin
     Dec(CurrentPage);
-    AcroPDF1.LoadFile(BaseFileName + IntToStr(CurrentPage) + '.pdf');
     btnNextPage.Enabled := True; // Enable the Next button
   end;
 
   if CurrentPage <= 1 then
   begin
-    btnPreviousPage.Enabled := False; // Disable the Previous button if at the first page
+    btnPreviousPage.Enabled := False;
+    // Disable the Previous button if at the first page
   end;
 end;
 
-
-
 procedure TFormPreview.btnPrintOutClick(Sender: TObject);
 var
-  i, FirstPage, LastPage: Integer;
+  i, FirstPage, lastpage: Integer;
   FileName: string;
 begin
   FirstPage := StrToIntDef(edtFirst.Text, 1); // Read first number from edtFirst
-  LastPage := StrToIntDef(edtLast.Text, TotalPages); // Read last number from edtLast
+  lastpage := StrToIntDef(edtLast.Text, TotalPages);
+  // Read last number from edtLast
 
-  for i := FirstPage to LastPage do
+  for i := FirstPage to lastpage do
   begin
     FileName := BaseFileName + IntToStr(i) + '.pdf';
     if FileExists(FileName) then
     begin
-      AcroPDF1.LoadFile(FileName);
-      AcroPDF1.printWithDialog;
+
     end
     else
     begin
@@ -118,7 +120,7 @@ end;
 
 procedure TFormPreview.CloseX1Click(Sender: TObject);
 begin
-   halt;
+  Close;
 end;
 
 procedure TFormPreview.edtFirstClick(Sender: TObject);
@@ -129,47 +131,39 @@ end;
 
 procedure TFormPreview.edtLastClick(Sender: TObject);
 begin
-      edtLast.Color := RGB(252, 252, 164);
-      edtFirst.Color := clWhite;
+  edtLast.Color := RGB(252, 252, 164);
+  edtFirst.Color := clWhite;
 end;
 
 procedure TFormPreview.FormCreate(Sender: TObject);
 begin
-    readPrinterSetup;
-    edtFirst.Text := '1';
+  readPrinterSetup;
+  edtFirst.Text := '1';
 end;
 
-procedure TFormPreview.LoadImageFromFile(const FileName: string; lastpage: Integer);
+procedure TFormPreview.LoadImageFromBitmap(Bitmap: TBitmap;
+  PageNumber: Integer);
 begin
-  if FileExists(FileName) then
-  begin
-    BaseFileName := ExtractFilePath(FileName) + 'PreviewPage_';
-    TotalPages := lastpage;
-    edtLast.Text :=  inttostr(lastpage);
-    CurrentPage := 1;
-    AcroPDF1.LoadFile(BaseFileName + IntToStr(CurrentPage) + '.pdf');
-    btnPreviousPage.Enabled := False; // Start with Previous button disabled
-    btnNextPage.Enabled := (TotalPages > 1); // Enable Next if more than one page
-  end
-  else
-    ShowMessage('File not found: ' + FileName);
+  ImagePreview.Picture.Assign(Bitmap); // Assign bitmap to ImagePreview
+  lblPagetoprint.Caption := Format('Page %d of %d', [PageNumber, TotalPages]);
+  // Update label with page number
 end;
 
 procedure TFormPreview.PrintoutP1Click(Sender: TObject);
 var
-  i, FirstPage, LastPage: Integer;
+  i, FirstPage, lastpage: Integer;
   FileName: string;
 begin
   FirstPage := StrToIntDef(edtFirst.Text, 1); // Read first number from edtFirst
-  LastPage := StrToIntDef(edtLast.Text, TotalPages); // Read last number from edtLast
+  lastpage := StrToIntDef(edtLast.Text, TotalPages);
+  // Read last number from edtLast
 
-  for i := FirstPage to LastPage do
+  for i := FirstPage to lastpage do
   begin
     FileName := BaseFileName + IntToStr(i) + '.pdf';
     if FileExists(FileName) then
     begin
-      AcroPDF1.LoadFile(FileName);
-      AcroPDF1.printWithDialog;
+
     end
     else
     begin
@@ -185,13 +179,14 @@ var
   UseDefaultPrinter: Boolean;
   PrinterFound: Boolean;
   PaperSizes: array of Word;
-  PaperNames: array of array[0..63] of Char;
-  NumPaperSizes, i ,DesiredPaperSize: Integer;
+  PaperNames: array of array [0 .. 63] of Char;
+  NumPaperSizes, i, DesiredPaperSize: Integer;
   hPrinter: THandle;
   SelectedPaperSize: Integer;
   ExcelApp: Variant;
 begin
-  IniFileName := ExtractFilePath(Application.ExeName) + 'GRD\DS13LBC100_printer.ini';
+  IniFileName := ExtractFilePath(Application.ExeName) +
+    'GRD\DS13LBC100_printer.ini';
   Ini := TIniFile.Create(IniFileName);
   try
     // Read settings from the INI file
@@ -199,8 +194,8 @@ begin
     PaperStyle := Ini.ReadString('Settings', 'PaperStyle', 'Horizontal');
     DesiredPaperSize := Ini.ReadInteger('Settings', 'PaperSizeNum', 1);
     PrinterName := Ini.ReadString('Settings', 'Printer', '');
-    //1  xlPortrait
-    //2  xlLandscape
+    // 1  xlPortrait
+    // 2  xlLandscape
 
   finally
     Ini.Free;
@@ -208,4 +203,3 @@ begin
 end;
 
 end.
-

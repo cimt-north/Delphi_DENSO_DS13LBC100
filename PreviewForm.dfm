@@ -1,54 +1,77 @@
 object FormPreview: TFormPreview
   Left = 0
   Top = 0
+  Margins.Left = 4
+  Margins.Top = 4
+  Margins.Right = 4
+  Margins.Bottom = 4
   Caption = 'Preview'
-  ClientHeight = 500
-  ClientWidth = 800
+  ClientHeight = 615
+  ClientWidth = 996
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -12
+  Font.Height = -15
   Font.Name = 'Segoe UI'
   Font.Style = []
   Menu = MainMenu1
   OnCreate = FormCreate
-  TextHeight = 15
+  PixelsPerInch = 120
+  TextHeight = 20
   object Panel2: TPanel
     Left = 0
-    Top = 89
-    Width = 800
-    Height = 411
+    Top = 111
+    Width = 996
+    Height = 504
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alClient
     TabOrder = 2
-    object AcroPDF1: TAcroPDF
+    object ImagePreview: TImage
       Left = 0
-      Top = 2
-      Width = 1080
-      Height = 720
-      TabOrder = 0
-      ControlData = {000E00009F6F00006A4A0000}
+      Top = 3
+      Width = 719
+      Height = 360
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
     end
   end
   object Panel1: TPanel
     Left = 0
-    Top = 56
-    Width = 800
-    Height = 33
+    Top = 70
+    Width = 996
+    Height = 41
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Align = alTop
     ParentBackground = False
     TabOrder = 0
     object lblPagetoprint: TLabel
-      Left = 24
-      Top = 10
-      Width = 68
-      Height = 15
+      Left = 30
+      Top = 13
+      Width = 85
+      Height = 20
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Caption = 'Page to print'
     end
     object edtFrom: TEdit
-      Left = 98
-      Top = 6
-      Width = 47
-      Height = 23
+      Left = 123
+      Top = 8
+      Width = 58
+      Height = 28
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Color = clBtnFace
       Enabled = False
       ReadOnly = True
@@ -56,10 +79,14 @@ object FormPreview: TFormPreview
       Text = '    From'
     end
     object edtto: TEdit
-      Left = 202
-      Top = 6
-      Width = 47
-      Height = 23
+      Left = 253
+      Top = 8
+      Width = 58
+      Height = 28
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Color = clBtnFace
       Enabled = False
       ReadOnly = True
@@ -67,20 +94,28 @@ object FormPreview: TFormPreview
       Text = '         To'
     end
     object edtFirst: TEdit
-      Left = 149
-      Top = 6
-      Width = 47
-      Height = 23
+      Left = 186
+      Top = 8
+      Width = 59
+      Height = 28
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Alignment = taRightJustify
       Color = clWhite
       TabOrder = 2
       OnClick = edtFirstClick
     end
     object edtLast: TEdit
-      Left = 255
-      Top = 6
-      Width = 47
-      Height = 23
+      Left = 319
+      Top = 8
+      Width = 59
+      Height = 28
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
       Alignment = taRightJustify
       Color = clWhite
       TabOrder = 3
@@ -90,23 +125,32 @@ object FormPreview: TFormPreview
   object clbToolButton: TCoolBar
     Left = 0
     Top = 0
-    Width = 800
-    Height = 56
+    Width = 996
+    Height = 70
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     Bands = <
       item
         Control = tlbToolButton
         ImageIndex = -1
-        MinHeight = 58
-        Width = 794
+        MinHeight = 371
+        Width = 990
       end>
     Color = clWhite
     ParentColor = False
     object tlbToolButton: TToolBar
       Left = 11
       Top = 0
-      Width = 785
-      Height = 58
-      ButtonHeight = 52
+      Width = 981
+      Height = 371
+      Margins.Left = 4
+      Margins.Top = 4
+      Margins.Right = 4
+      Margins.Bottom = 4
+      ButtonHeight = 65
+      ButtonWidth = 29
       Caption = 'tlbToolButton'
       Color = clWhite
       ParentColor = False
@@ -114,8 +158,12 @@ object FormPreview: TFormPreview
       object btnPrintOut: TSpeedButton
         Left = 0
         Top = 0
-        Width = 70
-        Height = 52
+        Width = 88
+        Height = 65
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'PrintOut'
         ImageIndex = 3
         Images = imlToolBar
@@ -123,10 +171,14 @@ object FormPreview: TFormPreview
         OnClick = btnPrintOutClick
       end
       object btnPreviousPage: TSpeedButton
-        Left = 70
+        Left = 88
         Top = 0
-        Width = 70
-        Height = 52
+        Width = 87
+        Height = 65
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Caption = 'Previous'
         ImageIndex = 0
         Images = imlToolBar
@@ -134,10 +186,14 @@ object FormPreview: TFormPreview
         OnClick = btnPreviousPageClick
       end
       object btnNextPage: TSpeedButton
-        Left = 140
+        Left = 175
         Top = 0
-        Width = 70
-        Height = 52
+        Width = 88
+        Height = 65
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alLeft
         Caption = 'Next'
         ImageIndex = 1
@@ -146,10 +202,14 @@ object FormPreview: TFormPreview
         OnClick = btnNextPageClick
       end
       object btnClose: TSpeedButton
-        Left = 210
+        Left = 263
         Top = 0
-        Width = 70
-        Height = 52
+        Width = 87
+        Height = 65
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
         Align = alLeft
         Caption = 'Close'
         ImageIndex = 2

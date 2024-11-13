@@ -22,11 +22,11 @@ type
     function GetSessionID(const DoctorURL: string): string;
     function GetSQLJson(const SQLText: string): string;
     function Base64Encode(const InputStr: string): string;
-    procedure RetrieveUserCredentials(var User, Pass: string);
-    function LoadGRDConfiguration: string;
 
   public
     constructor Create(AOwner: TComponent); reintroduce;
+    function ReadSetting(const Section, Key, DefaultValue: string): string;
+    procedure WriteSetting(const Section, Key, Value: string);
     function InitializeConnection(IsRESTAPI: Boolean): string;
     procedure FetchDataFromOracle(const SQLText: string; MemTable: TFDMemTable);
     function FetchDataFromREST(const SQLText: string;
@@ -44,22 +44,6 @@ implementation
 constructor TDataModuleCIMT.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-end;
-
-procedure TDataModuleCIMT.RetrieveUserCredentials(var User, Pass: string);
-var
-  IniFile: TIniFile;
-  IniFileName: string;
-begin
-  IniFileName := ExtractFilePath(Application.ExeName) + 'GRD\' +
-    ChangeFileExt(ExtractFileName(Application.ExeName), '.ini');
-  IniFile := TIniFile.Create(IniFileName);
-  try
-    User := IniFile.ReadString('Setting', 'User', 'admin');
-    Pass := IniFile.ReadString('Setting', 'Pass', 'admin');
-  finally
-    IniFile.Free;
-  end;
 end;
 
 function TDataModuleCIMT.LoadOracleParameters: string;
@@ -116,7 +100,8 @@ var
   User, Pass: string;
 begin
   // Retrieve User and Pass
-  RetrieveUserCredentials(User, Pass);
+  User := ReadSetting('Setting', 'User', 'admin');
+  Pass := ReadSetting('Setting', 'Pass', 'admin');
 
   HttpClient := THTTPClient.Create;
   try
@@ -179,23 +164,6 @@ end;
 function TDataModuleCIMT.Base64Encode(const InputStr: string): string;
 begin
   Result := TNetEncoding.Base64.Encode(InputStr);
-end;
-
-function TDataModuleCIMT.LoadGRDConfiguration: string;
-var
-  IniFile: TIniFile;
-  IniFileName: string;
-begin
-  // Use GRD folder for specific configurations
-  IniFileName := ExtractFilePath(Application.ExeName) + 'GRD\' +
-    ChangeFileExt(ExtractFileName(Application.ExeName), '.ini');
-  IniFile := TIniFile.Create(IniFileName);
-  try
-    // Example of retrieving a configuration value from the GRD folder
-    Result := IniFile.ReadString('Setting', 'ExampleKey', 'DefaultValue');
-  finally
-    IniFile.Free;
-  end;
 end;
 
 procedure TDataModuleCIMT.FetchDataFromOracle(const SQLText: string;
@@ -368,9 +336,50 @@ begin
     Result := LoadRestAPIParameters
   else
     Result := LoadOracleParameters;
+end;
 
-  // Example of invoking the GRD configuration if needed
-  LoadGRDConfiguration;
+// Centralized method for reading a setting from the INI file
+function TDataModuleCIMT.ReadSetting(const Section, Key,
+  DefaultValue: string): string;
+var
+  IniFile: TIniFile;
+  IniFileName, IniFileDir: string;
+begin
+  IniFileDir := ExtractFilePath(Application.ExeName) + 'GRD\';
+  IniFileName := IniFileDir + ChangeFileExt
+    (ExtractFileName(Application.ExeName), '.ini');
+
+  // Ensure the directory exists
+  if not DirectoryExists(IniFileDir) then
+    ForceDirectories(IniFileDir);
+
+  IniFile := TIniFile.Create(IniFileName);
+  try
+    Result := IniFile.ReadString(Section, Key, DefaultValue);
+  finally
+    IniFile.Free;
+  end;
+end;
+
+procedure TDataModuleCIMT.WriteSetting(const Section, Key, Value: string);
+var
+  IniFile: TIniFile;
+  IniFileName, IniFileDir: string;
+begin
+  IniFileDir := ExtractFilePath(Application.ExeName) + 'GRD\';
+  IniFileName := IniFileDir + ChangeFileExt
+    (ExtractFileName(Application.ExeName), '.ini');
+
+  // Ensure the directory exists
+  if not DirectoryExists(IniFileDir) then
+    ForceDirectories(IniFileDir);
+
+  IniFile := TIniFile.Create(IniFileName);
+  try
+    IniFile.WriteString(Section, Key, Value);
+  finally
+    IniFile.Free;
+  end;
 end;
 
 end.

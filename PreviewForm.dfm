@@ -6,8 +6,8 @@ object FormPreview: TFormPreview
   Margins.Right = 4
   Margins.Bottom = 4
   Caption = 'Preview'
-  ClientHeight = 610
-  ClientWidth = 994
+  ClientHeight = 634
+  ClientWidth = 996
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,20 +15,21 @@ object FormPreview: TFormPreview
   Font.Name = 'Segoe UI'
   Font.Style = []
   Menu = MainMenu1
-  OnCreate = FormCreate
   PixelsPerInch = 120
   TextHeight = 20
   object Panel2: TPanel
     Left = 0
     Top = 111
-    Width = 994
-    Height = 499
+    Width = 996
+    Height = 523
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     Align = alClient
     TabOrder = 2
+    ExplicitWidth = 988
+    ExplicitHeight = 499
     object ImagePreview: TImage
       Left = 0
       Top = 3
@@ -43,7 +44,7 @@ object FormPreview: TFormPreview
   object Panel1: TPanel
     Left = 0
     Top = 70
-    Width = 994
+    Width = 996
     Height = 41
     Margins.Left = 4
     Margins.Top = 4
@@ -52,6 +53,7 @@ object FormPreview: TFormPreview
     Align = alTop
     ParentBackground = False
     TabOrder = 0
+    ExplicitWidth = 988
     object lblPagetoprint: TLabel
       Left = 30
       Top = 13
@@ -63,38 +65,30 @@ object FormPreview: TFormPreview
       Margins.Bottom = 4
       Caption = 'Page to print'
     end
-    object edtFrom: TEdit
-      Left = 123
-      Top = 8
-      Width = 58
-      Height = 28
+    object lblPrintFrom: TLabel
+      Left = 175
+      Top = 13
+      Width = 68
+      Height = 20
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Color = clBtnFace
-      Enabled = False
-      ReadOnly = True
-      TabOrder = 0
-      Text = '    From'
+      Caption = 'Print From'
     end
-    object edtto: TEdit
-      Left = 253
-      Top = 8
-      Width = 58
-      Height = 28
+    object lblPrintTo: TLabel
+      Left = 319
+      Top = 13
+      Width = 16
+      Height = 20
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      Color = clBtnFace
-      Enabled = False
-      ReadOnly = True
-      TabOrder = 1
-      Text = '         To'
+      Caption = 'To'
     end
     object edtFirst: TEdit
-      Left = 186
+      Left = 249
       Top = 8
       Width = 59
       Height = 28
@@ -104,28 +98,29 @@ object FormPreview: TFormPreview
       Margins.Bottom = 4
       Alignment = taRightJustify
       Color = clWhite
-      TabOrder = 2
+      TabOrder = 0
       OnClick = edtFirstClick
     end
     object edtLast: TEdit
-      Left = 319
+      Left = 343
       Top = 8
       Width = 59
       Height = 28
+      Hint = 'To'
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Alignment = taRightJustify
       Color = clWhite
-      TabOrder = 3
+      TabOrder = 1
       OnClick = edtLastClick
     end
   end
   object clbToolButton: TCoolBar
     Left = 0
     Top = 0
-    Width = 994
+    Width = 996
     Height = 70
     Margins.Left = 4
     Margins.Top = 4
@@ -135,21 +130,22 @@ object FormPreview: TFormPreview
       item
         Control = tlbToolButton
         ImageIndex = -1
-        MinHeight = 594
-        Width = 988
+        MinHeight = 2432
+        Width = 990
       end>
     Color = clWhite
     ParentColor = False
+    ExplicitWidth = 988
     object tlbToolButton: TToolBar
       Left = 11
       Top = 0
-      Width = 979
-      Height = 594
+      Width = 981
+      Height = 2432
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
-      ButtonHeight = 65
+      ButtonHeight = 81
       ButtonWidth = 29
       Caption = 'tlbToolButton'
       Color = clWhite
@@ -159,7 +155,7 @@ object FormPreview: TFormPreview
         Left = 0
         Top = 0
         Width = 88
-        Height = 65
+        Height = 81
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -174,7 +170,7 @@ object FormPreview: TFormPreview
         Left = 88
         Top = 0
         Width = 87
-        Height = 65
+        Height = 81
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -189,7 +185,7 @@ object FormPreview: TFormPreview
         Left = 175
         Top = 0
         Width = 88
-        Height = 65
+        Height = 81
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
@@ -205,7 +201,7 @@ object FormPreview: TFormPreview
         Left = 263
         Top = 0
         Width = 87
-        Height = 65
+        Height = 81
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4

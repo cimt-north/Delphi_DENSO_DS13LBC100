@@ -6,8 +6,8 @@ object FormMain: TFormMain
   Margins.Right = 4
   Margins.Bottom = 4
   Caption = 'DS13LBC100'
-  ClientHeight = 688
-  ClientWidth = 1905
+  ClientHeight = 712
+  ClientWidth = 1908
   Color = 16636106
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -21,7 +21,7 @@ object FormMain: TFormMain
   object clbToolButton: TCoolBar
     Left = 0
     Top = 0
-    Width = 1905
+    Width = 1908
     Height = 70
     Margins.Left = 4
     Margins.Top = 4
@@ -31,14 +31,14 @@ object FormMain: TFormMain
       item
         Control = tlbToolButton
         ImageIndex = -1
-        MinHeight = 957
-        Width = 1899
+        MinHeight = 1531
+        Width = 1902
       end>
     object tlbToolButton: TToolBar
       Left = 11
       Top = 0
-      Width = 1890
-      Height = 957
+      Width = 1893
+      Height = 1531
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -114,7 +114,7 @@ object FormMain: TFormMain
   object panTitle: TPanel
     Left = 0
     Top = 70
-    Width = 1905
+    Width = 1908
     Height = 51
     Margins.Left = 4
     Margins.Top = 4
@@ -149,7 +149,7 @@ object FormMain: TFormMain
   object panHeader: TPanel
     Left = 0
     Top = 121
-    Width = 1905
+    Width = 1908
     Height = 130
     Margins.Left = 4
     Margins.Top = 4
@@ -223,8 +223,8 @@ object FormMain: TFormMain
   end
   object stbBase: TStatusBar
     Left = 0
-    Top = 664
-    Width = 1905
+    Top = 688
+    Width = 1908
     Height = 24
     Margins.Left = 4
     Margins.Top = 4
@@ -234,9 +234,9 @@ object FormMain: TFormMain
   end
   object stgMain: TStringGrid
     Left = 0
-    Top = 285
-    Width = 1905
-    Height = 329
+    Top = 279
+    Width = 1908
+    Height = 359
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -249,8 +249,8 @@ object FormMain: TFormMain
   end
   object Panel1: TPanel
     Left = 0
-    Top = 614
-    Width = 1905
+    Top = 638
+    Width = 1908
     Height = 50
     Margins.Left = 4
     Margins.Top = 4
@@ -288,8 +288,8 @@ object FormMain: TFormMain
   object ProgressBar1: TProgressBar
     Left = 0
     Top = 251
-    Width = 1905
-    Height = 34
+    Width = 1908
+    Height = 28
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -306,6 +306,7 @@ object FormMain: TFormMain
       Caption = '&File'
       object Printout1: TMenuItem
         Caption = 'Printout'
+        OnClick = Printout1Click
       end
       object Setting1: TMenuItem
         Caption = 'Setting'

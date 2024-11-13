@@ -4,8 +4,8 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics, System.IOUtils,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.WinXCtrls, IniFiles;
+  System.Classes, Vcl.Graphics, System.IOUtils, UDataModule,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.WinXCtrls;
 
 type
   TFormSetting = class(TForm)
@@ -58,51 +58,32 @@ begin
 end;
 
 procedure TFormSetting.LoadSetting;
-var
-  IniFile: TIniFile;
-  IniFileName: string;
 begin
-  // Load Setting from the INI file
-  IniFileName := ExtractFilePath(Application.ExeName) + 'GRD\' +
-    ChangeFileExt(ExtractFileName(Application.ExeName), '.ini');
-  IniFile := TIniFile.Create(IniFileName);
-  try
-    edtUser.Text := IniFile.ReadString('Setting', 'User', 'admin');
-    edtPass.Text := IniFile.ReadString('Setting', 'Pass', 'admin');
-    tgsUseRESTAPI.State := TToggleSwitchState(IniFile.ReadInteger('Setting',
-      'IsUseRESTAPI', Integer(tssOff)));
-    tgsDebugSQL.State := TToggleSwitchState(IniFile.ReadInteger('Setting',
-      'DebugSQL', Integer(tssOff)));
-  finally
-    IniFile.Free;
-  end;
+  // Use centralized ReadSetting method to load values
+  edtUser.Text := DataModuleCIMT.ReadSetting('Setting', 'User', 'admin');
+  edtPass.Text := DataModuleCIMT.ReadSetting('Setting', 'Pass', 'admin');
+
+  // Use StrToIntDef to safely convert the read integer settings for toggle switches
+  tgsUseRESTAPI.State := TToggleSwitchState
+    (StrToIntDef(DataModuleCIMT.ReadSetting('Setting', 'IsUseRESTAPI',
+    IntToStr(Integer(tssOff))), Integer(tssOff)));
+
+  tgsDebugSQL.State := TToggleSwitchState
+    (StrToIntDef(DataModuleCIMT.ReadSetting('Setting', 'DebugSQL',
+    IntToStr(Integer(tssOff))), Integer(tssOff)));
 end;
 
 procedure TFormSetting.SaveSettingToIni;
-var
-  IniFile: TIniFile;
-  IniFileName, IniFileDir: string;
 begin
-  // Define the INI file name and directory
-  IniFileDir := ExtractFilePath(Application.ExeName) + 'GRD\';
-  IniFileName := IniFileDir + ChangeFileExt
-    (ExtractFileName(Application.ExeName), '.ini');
+  // Use centralized WriteSetting method to save values
+  DataModuleCIMT.WriteSetting('Setting', 'User', edtUser.Text);
+  DataModuleCIMT.WriteSetting('Setting', 'Pass', edtPass.Text);
 
-  // Check if the directory exists, if not, create it
-  if not DirectoryExists(IniFileDir) then
-    ForceDirectories(IniFileDir);
-
-  // Save Setting to the INI file
-  IniFile := TIniFile.Create(IniFileName);
-  try
-    IniFile.WriteString('Setting', 'User', edtUser.Text);
-    IniFile.WriteString('Setting', 'Pass', edtPass.Text);
-    IniFile.WriteInteger('Setting', 'IsUseRESTAPI',
-      Integer(tgsUseRESTAPI.State));
-    IniFile.WriteInteger('Setting', 'DebugSQL', Integer(tgsDebugSQL.State));
-  finally
-    IniFile.Free;
-  end;
+  // Convert toggle switch states to strings for storage
+  DataModuleCIMT.WriteSetting('Setting', 'IsUseRESTAPI',
+    IntToStr(Integer(tgsUseRESTAPI.State)));
+  DataModuleCIMT.WriteSetting('Setting', 'DebugSQL',
+    IntToStr(Integer(tgsDebugSQL.State)));
 end;
 
 procedure TFormSetting.tgsUseRESTAPIClick(Sender: TObject);

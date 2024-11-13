@@ -11,7 +11,7 @@ uses
   Vcl.WinXCtrls, PreviewForm,
   Data.DB, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
   FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
-  ExcelXP, Vcl.Imaging.pngimage,
+  ExcelXP, Vcl.Imaging.pngimage, System.Generics.Collections,
   ComObj, Printers, Winapi.WinSpool, System.StrUtils, Clipbrd, System.IOUtils;
 
 type
@@ -66,10 +66,9 @@ type
     procedure btnDeleteSelectionClick(Sender: TObject);
     procedure btnDeleteAllClick(Sender: TObject);
     procedure btnPrintSetupClick(Sender: TObject);
-    procedure readPrinterSetup(Sheet: Variant);
-    procedure SetDefaultPrinter(const PrinterName: string);
     procedure Copy1Click(Sender: TObject);
     procedure Exit1Click(Sender: TObject);
+    procedure Printout1Click(Sender: TObject);
 
   private
     FDraggingColumn: Integer; // Column currently being dragged
@@ -91,6 +90,8 @@ type
     procedure InitConnection;
     procedure PreviewLabels;
     procedure AutoPopulateBarcodes;
+    function GenerateLabelBitmaps: TList<TBitmap>;
+    procedure PrintLabels;
   public
   end;
 
@@ -157,7 +158,7 @@ end;
 
 procedure TFormMain.btnPrintOutClick(Sender: TObject);
 begin
-  Close;
+  PrintLabels;
 end;
 
 procedure TFormMain.btnPrintSetupClick(Sender: TObject);
@@ -687,7 +688,8 @@ begin
   end;
 end;
 
-procedure TFormMain.PreviewLabels;
+// Create Label Image List
+function TFormMain.GenerateLabelBitmaps: TList<TBitmap>;
 const
   DPI = 203; // Target DPI for the label image
   LabelWidthMM = 90;
@@ -700,16 +702,14 @@ var
     Vendor: string;
   ResourceStream: TResourceStream;
   DensoLogo: TPngImage;
+  BitmapList: TList<TBitmap>;
 begin
   LabelWidthPx := Round(LabelWidthMM * DPI / 25.4);
   LabelHeightPx := Round(LabelHeightMM * DPI / 25.4);
 
-  FormPreview := TFormPreview.Create(Self);
+  // Create a list to store all bitmaps
+  BitmapList := TList<TBitmap>.Create;
   try
-    FormPreview.TotalPages := stgMain.RowCount - 1;
-    // Set total pages for pagination
-    FormPreview.CurrentPage := 1;
-
     // Loop through each row in the StringGrid, skipping the header row (Row 0)
     for i := 1 to stgMain.RowCount - 1 do
     begin
@@ -722,7 +722,7 @@ begin
       Qty := stgMain.Cells[COL_PART_QTY, i];
       Weight := stgMain.Cells[COL_WEIGHT, i];
       Coating := stgMain.Cells[COL_COATING, i];
-      Vendor := 'Some Vendor'; // Set vendor as needed
+      Vendor := 'Some Vendor';
 
       // Create a new bitmap for the label
       LabelBitmap := TBitmap.Create;
@@ -751,7 +751,6 @@ begin
               try
                 DensoLogo.LoadFromStream(ResourceStream);
                 StretchDraw(Rect(40, 35, 150, 60), DensoLogo);
-                // Adjust the logo size and position
               finally
                 DensoLogo.Free;
               end;
@@ -763,11 +762,10 @@ begin
               ShowMessage('Error loading DENSOLOGO resource: ' + E.Message);
           end;
 
-          // Draw company name
+          // Draw text and labels as before
           Font.Size := 9;
           TextOut(170, 40, 'Innovative Manufacturing Solution Asia Co.,Ltd');
 
-          // Draw title "Special Coating" centered
           Font.Size := 10;
           Font.Style := [fsBold];
           TextOut((LabelWidthPx div 2) - TextWidth('Special Coating') div 2, 90,
@@ -807,65 +805,104 @@ begin
           TextOut(510, 262, Vendor);
         end;
 
-        // Send bitmap to PreviewForm
-        FormPreview.LoadImageFromBitmap(LabelBitmap, i);
-        Application.ProcessMessages;
+        // Add the LabelBitmap to the list
+        BitmapList.Add(LabelBitmap);
 
-      finally
-        LabelBitmap.Free; // Free the bitmap after each loop iteration
+      except
+        LabelBitmap.Free; // Free bitmap if an exception occurs
+        raise;
       end;
     end;
 
-    FormPreview.ShowModal; // Display the preview form
-
-  finally
-    FormPreview.Free;
+    // Return the generated list of bitmaps
+    Result := BitmapList;
+  except
+    // Clean up if there was an error generating bitmaps
+    for LabelBitmap in BitmapList do
+      LabelBitmap.Free;
+    BitmapList.Free;
+    raise;
   end;
 end;
 
-procedure TFormMain.readPrinterSetup(Sheet: Variant);
+procedure TFormMain.PreviewLabels;
 var
-  Ini: TIniFile;
-  IniFileName, PaperStyle, PrinterName, FullPrinterName: string;
-  UseDefaultPrinter: Boolean;
-  PrinterFound: Boolean;
-  PaperSizes: array of Word;
-  PaperNames: array of array [0 .. 63] of Char;
-  NumPaperSizes, i, DesiredPaperSize: Integer;
-  hPrinter: THandle;
-  SelectedPaperSize: Integer;
-  ExcelApp: Variant;
+  BitmapList: TList<TBitmap>;
 begin
-  IniFileName := ExtractFilePath(Application.ExeName) +
-    'GRD\DS13LBC100_printer.ini';
-  Ini := TIniFile.Create(IniFileName);
+  BitmapList := GenerateLabelBitmaps;
   try
-    // Read settings from the INI file
-    UseDefaultPrinter := Ini.ReadBool('Settings', 'UseDefaultPrinter', False);
-    PaperStyle := Ini.ReadString('Settings', 'PaperStyle', 'Horizontal');
-    DesiredPaperSize := Ini.ReadInteger('Settings', 'PaperSizeNum', 1);
-    PrinterName := Ini.ReadString('Settings', 'Printer', '');
-
-    // Set orientation based on PaperStyle
-    if PaperStyle = 'Vertical' then
-      Sheet.PageSetup.Orientation := 1 // xlPortrait
-    else
-      Sheet.PageSetup.Orientation := 2; // xlLandscape
-
-    // Set the printer as the default and confirm with Excel
-    SetDefaultPrinter(PrinterName);
-
-    Sheet.PageSetup.PaperSize := DesiredPaperSize;
-
+    FormPreview := TFormPreview.Create(Self);
+    try
+      FormPreview.LoadImages(BitmapList); // Load all bitmaps at once
+      FormPreview.ShowModal;
+    finally
+      FormPreview.Free;
+    end;
   finally
-    Ini.Free;
+    // Free all bitmaps in the list
+    for var LabelBitmap in BitmapList do
+      LabelBitmap.Free;
+    BitmapList.Free;
   end;
 end;
 
-procedure TFormMain.SetDefaultPrinter(const PrinterName: string);
+procedure TFormMain.PrintLabels;
+  function SelectPrinterByName(const PrinterName: string): Boolean;
+  var
+    i: Integer;
+  begin
+    Result := False;
+    for i := 0 to Printer.Printers.Count - 1 do
+    begin
+      if SameText(Printer.Printers[i], PrinterName) then
+      begin
+        Printer.PrinterIndex := i; // Select the printer by setting PrinterIndex
+        Result := True;
+        Exit;
+      end;
+    end;
+
+    // If not found, show a message
+    ShowMessage('Printer not found: ' + PrinterName);
+  end;
+
+var
+  BitmapList: TList<TBitmap>;
+  i: Integer;
 begin
-  if not Winapi.WinSpool.SetDefaultPrinter(PChar(PrinterName)) then
-    ShowMessage('Failed to set default printer: ' + PrinterName);
+  // Select the printer
+  if not SelectPrinterByName(DataModuleCIMT.ReadSetting('Printer', 'Name', ''))
+  then
+  begin
+    Exit; // Stop if the printer is not found
+  end;
+
+  BitmapList := GenerateLabelBitmaps;
+
+  try
+    Printer.BeginDoc;
+    try
+      for i := 0 to BitmapList.Count - 1 do
+      begin
+        if i > 0 then
+          Printer.NewPage;
+        Printer.Canvas.Draw(0, 0, BitmapList[i]);
+        // Adjust (0, 0) to position the image on the page
+      end;
+    finally
+      Printer.EndDoc;
+    end;
+  finally
+    // Free all bitmaps in the list
+    for var LabelBitmap in BitmapList do
+      LabelBitmap.Free;
+    BitmapList.Free;
+  end;
+end;
+
+procedure TFormMain.Printout1Click(Sender: TObject);
+begin
+  PrintLabels;
 end;
 
 // For debug

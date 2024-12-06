@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2024/08/20 10:50:38.000.045,=C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
+    <Transaction>2024/08/20 10:52:27.000.738,C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.dfm=C:\Users\User\Documents\Embarcadero\Studio\Projects\MainForm.dfm</Transaction>
+    <Transaction>2024/08/20 10:52:27.000.738,C:\Users\User\Documents\Embarcadero\Studio\Projects\Unit2.pas=C:\Users\User\Documents\Embarcadero\Studio\Projects\MainForm.pas</Transaction>
+    <Transaction>2024/08/20 10:53:22.000.282,C:\Users\User\Documents\Embarcadero\Studio\Projects\MainForm.dfm=C:\dev\DELPHI\CIM\ProjectTemplate\MainForm.dfm</Transaction>
+    <Transaction>2024/08/20 10:53:22.000.282,C:\Users\User\Documents\Embarcadero\Studio\Projects\MainForm.pas=C:\dev\DELPHI\CIM\ProjectTemplate\MainForm.pas</Transaction>
+    <Transaction>2024/08/20 10:53:47.000.763,C:\Users\User\Documents\Embarcadero\Studio\Projects\Project2.dproj=C:\dev\DELPHI\CIM\ProjectTemplate\ProjectTemplate.dproj</Transaction>
+    <Transaction>2024/08/20 10:53:58.000.088,=C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.pas</Transaction>
+    <Transaction>2024/08/20 10:54:49.000.832,C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.dfm=C:\dev\DELPHI\CIM\ProjectTemplate\UDataModule.dfm</Transaction>
+    <Transaction>2024/08/20 10:54:49.000.832,C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.pas=C:\dev\DELPHI\CIM\ProjectTemplate\UDataModule.pas</Transaction>
+    <Transaction>2024/08/20 10:54:59.000.078,=C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.pas</Transaction>
+    <Transaction>2024/08/20 10:55:13.000.673,C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.pas=C:\dev\DELPHI\CIM\ProjectTemplate\UBusinessLogic.pas</Transaction>
+    <Transaction>2024/08/20 10:55:24.000.936,=C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.pas</Transaction>
+    <Transaction>2024/08/20 10:55:36.000.375,C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.pas=C:\dev\DELPHI\CIM\ProjectTemplate\UConfigManager.pas</Transaction>
+    <Transaction>2024/08/20 10:56:02.000.936,=C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.pas</Transaction>
+    <Transaction>2024/08/20 10:56:30.000.673,C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.dfm=C:\dev\DELPHI\CIM\ProjectTemplate\SettingForm.dfm</Transaction>
+    <Transaction>2024/08/20 10:56:30.000.673,C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.pas=C:\dev\DELPHI\CIM\ProjectTemplate\SettingForm.pas</Transaction>
+    <Transaction>2024/08/21 16:20:52.000.168,C:\dev\DELPHI\CIM\ProjectTemplate\UConfigManager.pas=</Transaction>
+    <Transaction>2024/08/22 08:45:13.000.524,C:\dev\DELPHI\CIM\ProjectTemplate\UBusinessLogic.pas=</Transaction>
+    <Transaction>2024/08/22 08:45:23.000.996,=C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.pas</Transaction>
+    <Transaction>2024/08/22 08:48:19.000.628,=C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.pas</Transaction>
+    <Transaction>2024/08/22 08:48:34.000.250,C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.dfm=C:\dev\DELPHI\CIM\ProjectTemplate\DetailForm.dfm</Transaction>
+    <Transaction>2024/08/22 08:48:34.000.250,C:\dev\DELPHI\CIM\ProjectTemplate\Unit1.pas=C:\dev\DELPHI\CIM\ProjectTemplate\DetailForm.pas</Transaction>
+    <Transaction>2024/10/29 13:14:14.000.315,C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\ProjectTemplate.dproj=C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\DS13LBC100.dproj</Transaction>
+    <Transaction>2024/11/06 07:49:42.000.929,=C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\Unit1.pas</Transaction>
+    <Transaction>2024/11/06 07:50:15.000.373,C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\PrintSetupForm.dfm=C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\Unit1.dfm</Transaction>
+    <Transaction>2024/11/06 07:50:15.000.373,C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\PrintSetupForm.pas=C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\Unit1.pas</Transaction>
+    <Transaction>2024/11/06 07:54:17.000.443,C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\PrintSetupForm.pas=</Transaction>
+    <Transaction>2024/11/06 07:54:22.000.995,=C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\Unit1.pas</Transaction>
+    <Transaction>2024/11/06 07:55:01.000.928,C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\PrintSetupForm.dfm=C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\Unit1.dfm</Transaction>
+    <Transaction>2024/11/06 07:55:01.000.928,C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\PrintSetupForm.pas=C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\Unit1.pas</Transaction>
+    <Transaction>2024/11/06 14:46:26.000.310,=C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\Unit1.pas</Transaction>
+    <Transaction>2024/11/06 14:46:58.000.021,C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\PreviewForm.dfm=C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\Unit1.dfm</Transaction>
+    <Transaction>2024/11/06 14:46:58.000.021,C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\PreviewForm.pas=C:\Users\CIMT-North\Documents\Embarcadero\Studio\Projects\DENSO\Delphi_DENSO_DS13LBC100\Unit1.pas</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="DetailForm.pas"/>
+    <File Path="DetailForm.dfm"/>
+    <File Path="MainForm.pas"/>
+    <File Path="MainForm.dfm"/>
+    <File Path="SettingForm.pas"/>
+    <File Path="SettingForm.dfm"/>
+    <File Path="UDataModule.pas"/>
+    <File Path="UDataModule.dfm"/>
+    <File Path="PrintSetupForm.pas"/>
+    <File Path="PrintSetupForm.dfm"/>
+    <File Path="PreviewForm.pas"/>
+    <File Path="PreviewForm.dfm"/>
+  </ProjectSortOrder>
+</BorlandProject>
